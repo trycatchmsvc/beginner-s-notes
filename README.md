@@ -449,26 +449,50 @@ int main(){
 String Methods
 =====================
 
-**strlen**	Возвращает длину строки без \0	size_t len = strlen("Hello");	len = 5
+**strlen**	
+###
+Возвращает длину строки без \0	size_t len = strlen("Hello");	len = 5
 
-**strcpy**	Копирует строку в другую строку	char dest[6]; strcpy(dest, "Hello");	dest = "Hello"
+**strcpy**	
+###
+Копирует строку в другую строку	char dest[6]; strcpy(dest, "Hello");	dest = "Hello"
 
-**strncpy**	Копирует строку с ограничением количества символов	char dest[6]; strncpy(dest, "Hello", 4); dest[4] = '\0';	dest = "Hell"
+**strncpy**	
+###
+Копирует строку с ограничением количества символов	char dest[6]; strncpy(dest, "Hello", 4); dest[4] = '\0';	dest = "Hell"
 
-**strcmp**	Сравнивает две строки	int res = strcmp("apple", "banana");	res < 0 (так как "apple" < "banana")
+**strcmp**	
+###
+Сравнивает две строки	int res = strcmp("apple", "banana");	res < 0 (так как "apple" < "banana")
 
-**strcat**	Конкатенирует строки	char dest[12] = "Hello, "; strcat(dest, "world!");	dest = "Hello, world!"
+**strcat**	
+###
+Конкатенирует строки	char dest[12] = "Hello, "; strcat(dest, "world!");	dest = "Hello, world!"
 
-**strncat**	Конкатенирует строки с ограничением символов	char dest[10] = "Hello, "; strncat(dest, "world!", 3);	dest = "Hello, wor"
+**strncat**	
+###
+Конкатенирует строки с ограничением символов	char dest[10] = "Hello, "; strncat(dest, "world!", 3);	dest = "Hello, wor"
 
-**strchr**	Находит первое вхождение символа	char *pos = strchr("Hello, world!", 'w');	pos указывает на w в строке "Hello, world!"
+**strchr**	
+###
+Находит первое вхождение символа	char *pos = strchr("Hello, world!", 'w');	pos указывает на w в строке "Hello, world!"
 
-**strrchr**	Находит последнее вхождение символа	char *pos = strrchr("Hello, world!", 'o');	pos указывает на второй o в "Hello, world!"
+**strrchr**	
+###
+Находит последнее вхождение символа	char *pos = strrchr("Hello, world!", 'o');	pos указывает на второй o в "Hello, world!"
 
-**strstr**	Находит первое вхождение подстроки	char *pos = strstr("Hello, world!", "world");	pos указывает на world в "Hello, world!"
+**strstr**	
+###
+Находит первое вхождение подстроки	char *pos = strstr("Hello, world!", "world");	pos указывает на world в "Hello, world!"
 
-**strspn**	Подсчитывает длину участка, содержащего только символы из заданного набора	size_t len = strspn("123abc", "0123456789");	len = 3 (три цифры подряд в начале строки)
+**strspn**	
+###
+Подсчитывает длину участка, содержащего только символы из заданного набора	size_t len = strspn("123abc", "0123456789");	len = 3 (три цифры подряд в начале строки)
 
-**strcspn**	Подсчитывает длину участка до любого символа из заданного набора	size_t len = strcspn("Hello, world!", ",!");	len = 5 (индекс первого ,)
+**strcspn**	
+###
+Подсчитывает длину участка до любого символа из заданного набора	size_t len = strcspn("Hello, world!", ",!");	len = 5 (индекс первого ,)
 
-**strtok**	Разделяет строку на токены, используя разделители	char str[] = "a,b,c"; char *token = strtok(str, ","); while (token) { ... }	token поочередно равен "a", "b", "c"
+**strtok**	
+###
+Разделяет строку на токены, используя разделители	char str[] = "a,b,c"; char *token = strtok(str, ","); while (token) { ... }	token поочередно равен "a", "b", "c"
