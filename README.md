@@ -80,20 +80,21 @@ Specificator of format FOR printf
 
 ### Для чисел с плавающей точкой:
 
-%f — вывод числа с плавающей точкой (тип float или double).
-%e или %E — вывод числа в экспоненциальной форме (например, 1.23e+03).
-%g или %G — вывод числа с плавающей точкой в либо обычной, либо экспоненциальной форме, в зависимости от величины числа.
+%f — вывод числа с плавающей точкой (тип float или double)
+
+%e или %E — вывод числа в экспоненциальной форме (например, 1.23e+03)
+
+%g или %G — вывод числа с плавающей точкой в либо обычной, либо экспоненциальной форме, в зависимости от величины числа
 
 ### Для символов и строк:
 
-%c — вывод одного символа (тип char).
-%s — вывод строки (массив символов, тип char*).
+%c — вывод одного символа (тип char)
 
+%s — вывод строки (массив символов, тип char*)
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-														How use russian language?
-
+How use russian language?
+=====================
+```c++
 #include <iostream>
 #include <locale> // library for set locale language
 using namespace std;
@@ -101,7 +102,7 @@ using namespace std;
 int input_number_1;
 
 int main() {
-	setlocale(LC_ALL, "Russian"); // need function for russian
+	setlocale(LC_ALL, "Russian"); // set ASCII Ru
 	int input_number_1, result;
 	cout << "Lets use keyboard! Tap numbers! " << endl;
 	cin >> input_number_1;
@@ -109,25 +110,25 @@ int main() {
 	cout << "Число " << input_number_1 << " умноженное на 2 = " << result << endl;
 	return 0;
 }
+```
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-															
-															Logical operators
+Logical operators
+=====================
 
-																&& | and 
-																|| | or
+&& | and 
+|| | or
 																
-><><<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+
 														 
-														 Increment and Decrement
+Increment and Decrement
+=====================
 
-										   ++ | Увеличивает a на 1. Префиксное и постфиксное различие
-										   -- | Уменьшает a на 1. Префиксное и постфиксное различие
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+++ | Увеличивает a на 1. Префиксное и постфиксное различие
+-- | Уменьшает a на 1. Префиксное и постфиксное различие
 
 Switch - case
-
+=====================
+```c++
 #include <iostream>
 
 using namespace std;
@@ -157,13 +158,14 @@ int main() {
 
 	return 0;
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+```
+scanf
+=====================
 
 USING SCANF IS NOT GOOD BUT YOU CAN IT USE
 it is need use #define because it is calling warning
 
-
+```c++
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
@@ -174,11 +176,10 @@ int main() {
 	printf("int а = %d",a);
 	return 0;
 }
+```
+Указатели и ссылки || Pointer and Reference
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//Pointer and reference
-
+```c++
 #include <iostream>
 using namespace std;
 
@@ -194,11 +195,11 @@ int main() {
 
 	return 0;
 }
+```
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//Generator random
-
+Generator random
+=====================
+```c++
 #include <iostream>
 #include <ctime> //import library for point of calculate
 using namespace std;
@@ -210,19 +211,21 @@ int main() {
 	cout << a << "\t" << b << endl;
 	return 0;
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+```
 
 Array
+=====================
+```c++
 
+How use array
 #include <iostream>
 
 int main() {
 	int array[3];
-	int arr[3] = { 1, 2, 3 };
-	int arr2[3][2] = { {1, 2}, {3, 4}, {5, 6} };
-
-	array[0] = 1;
+	int arr[3] = { 1, 2, 3 }; //1D Array
+	int arr2[3][2] = { {1, 2}, {3, 4}, {5, 6} }; //2D Array
+ 
+	array[0] = 1; //Pointer
 	array[1] = 2;
 	array[2] = 3;
 
@@ -231,7 +234,10 @@ int main() {
 	return 0;
 }
 
-
+```
+2D Array
+###
+```c++
 #include <iostream>
 using namespace std;
 
@@ -239,13 +245,16 @@ int main() {
 
 	int arr[3][2] = { {1,2}, {3,4}, {5, 6} };
 	int arr2[3];
+	
 	cout << "1 array" << endl;
+	
 	for (int i = 0; i < 3; i++) {
 		for (int i1 = 0; i1 < 2; i1++) {
 			cout << arr[i][i1] << " ";
 		}
 		cout << endl;
 	}
+	
 	for (int i = 0; i < 3; i++) {
 		cin >> arr2[i];
 	}
@@ -253,9 +262,10 @@ int main() {
 	for (int i = 0; i < sizeof(arr2) / sizeof(arr2[0]); i++) {
 		cout << arr2[i] << " ";
 	}
+	
 	return 0;
 }
-
+```
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Dynamic array
