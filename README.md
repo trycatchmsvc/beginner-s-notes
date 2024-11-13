@@ -446,7 +446,7 @@ int main(){
 }
 ```
 
-Str Methods
+String Methods
 =====================
 
 **strlen**	Возвращает длину строки без \0	size_t len = strlen("Hello");	len = 5
