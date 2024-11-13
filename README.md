@@ -15,7 +15,7 @@ std — это пространство имен (namespace) в стандарт
 В C++ пространства имен используются для организации кода и предотвращения конфликтов имен.
 
 
-1. "Hello world" different methods
+"Hello world" different methods
 =====================
 Without namespace
 ```c++
