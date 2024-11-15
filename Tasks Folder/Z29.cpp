@@ -1,72 +1,45 @@
+//29. Написать функцию void strip(char *s, const char *chars), которая удаляет из начала 
+//и конца строки s символы, входящие в строку chars.
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <string>
 using namespace std;
 
-void strip(char* s, const char* chars);
+void rstrip(char* str, const char* str_2);
 
 int main() {
-    char str[] = "All work and no play makes Jack a dull boy :))";
-    char str_del[] = "All :))";
 
-    strip(str, str_del);
-    cout << str;
+	char s[] = "All work and no play makes Jack a dull boy :))";
 
-    return 0;
+	char chars[] = "All :))";
+
+	rstrip(s, chars);
+
+	cout << s << endl;
+
+	return 0;
 }
 
-void strip(char* s, const char* chars) {
-    string str2[100] = {};
-    string del_str[100] = {};
+void rstrip(char* str, const char* str_2) {
 
-    int size = 0;
-    int swap_val = 0;
-    string str_adder = "";
+	int pos = 0;
+	for (int i{ 0 }; i < strlen(str_2); i++) {
+		for (int j{ (int)strlen(str_2) - 1 }; str_2[j] != '\0'; j--) {
+			if (str[i] == str_2[j]) {
+				str[i] = ' ';
+				pos++;
+			}
+		}
+	}
 
-    for (int i = 0; i <= strlen(s); i++) {
-        if (s[i] != ' ' && s[i] != '\0') {
-            str_adder += s[i];
-        }
-        else {
-            str2[swap_val++] = str_adder;
-            str_adder = "";
-        }
-    }
-    size = swap_val;
+	for (int i{ 0 }; i < (int)strlen(str); i++) {
+		str[i] = str[i + pos];
+	}
 
-    swap_val = 0;
-    str_adder = "";
-
-    for (int i = 0; i <= strlen(chars); i++) {
-        if (chars[i] != ' ' && chars[i] != '\0') {
-            str_adder += chars[i];
-        }
-        else {
-            del_str[swap_val++] = str_adder;
-            str_adder = "";
-        }
-    }
-
-    
-    if (str2[0] == del_str[0]) {
-        str2[0] = "";
-        size--;
-    }
-
-    if (str2[3] == del_str[1]) {
-        str2[size - 1] = "";
-        size--;
-    }
-
-    int pos = 0;
-    for (int i = 0; i < size; i++) {
-        if (!str2[i].empty()) {
-            if (pos > 0) {
-                s[pos++] = ' ';
-            }
-            for (char c : str2[i]) {
-                s[pos++] = c;
-            }
-        }
-    }
-    s[pos] = '\0';
+	for (int i{(int)strlen(str) }; i >= strlen(str) - strlen(str_2); i--) {
+		for (int j{(int)strlen(str_2)-1}; str_2[j] != '\0'; j--) {
+			if (str[i] == str_2[j]) {
+				str[i] = ' ';
+			}
+		}
+	}
 }
