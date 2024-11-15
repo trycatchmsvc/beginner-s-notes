@@ -1,4 +1,9 @@
+Оглавление
+=====================
+
 [Datatype C++](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#datatype-c)
+###
+
 
 Datatype C++
 =====================
