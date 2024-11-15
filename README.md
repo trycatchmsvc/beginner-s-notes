@@ -4,6 +4,19 @@
 [Datatype C++](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#datatype-c)
 ###
 
+[Using namespace](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#using-namespace)
+###
+
+["Hello world" - streaming output method - iostream library](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#hello-world---streaming-output-method---iostream-library)
+###
+
+[COUT + PRINTF](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#cout--printf)
+###
+
+[Format cout from iostream](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#using-namespace:~:text=Format%20cout%20from%20iostream)
+
+
+[Specificator of format FOR printf](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#specificator-of-format-for-printf)
 
 Datatype C++
 =====================
