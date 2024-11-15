@@ -20,17 +20,12 @@ int main() {
 }
 
 void rstrip(char* str, const char* str_2) {
-
-	for (int i = strlen(str); i > strlen(str_2) - 1; i--) { // проходимся по 1 строке назад
-
-		string str_check = ""; // записываем временную строку для сравнения
-
-		for (int j = strlen(str_2); j > 0; j--) { // составляем строку
-			str_check += str[i - j]; // добавляем значение в временную строку
+	for (int i{(int)strlen(str) }; i >= strlen(str) - strlen(str_2); i--) {
+		for (int j{ 0 }; j < strlen(str_2); j++) {
+			if (str[i] == str_2[j]) {
+				str[i] = ' ';
+			}
 		}
 
-		if (str_2 == str_check) { // проверяем схожесть строки
-			str[strlen(str) - strlen(str_2)] = '\0'; // заменяем на детерминирующий ноль
-		}
 	}
 }
