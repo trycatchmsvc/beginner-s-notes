@@ -1,3 +1,5 @@
+[Datatype C++](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#datatype-c)
+
 Datatype C++
 =====================
 sizeof(type data) - method for showing size of any type data
