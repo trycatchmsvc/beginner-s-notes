@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-void rstrip(char* str, const char* str_2);
+void rstrip(string &s, const string chars);
 size_t strLen(string str);
 
 int main() {
@@ -13,40 +13,27 @@ int main() {
 
 	string chars = ":))";
 
-	int size_s = (int)strLen(s);
-	int size_chars = (int)strLen(chars);
-	
-	//cout << size_chars;
-
-	int pointer = 0;
-	string str_val = "";
-	string str_arr[255] = {};
-	
-	for (int i = 0; i < size_chars; i++) { 
-		for (int j = (int)s.length() - 1; j >= 0; j--) { 
-			if (s[j] == chars[i]) {             
-				s.erase(j, 1);                    
-			}
-		}
-	}
+	rstrip(s, chars);
 
 	cout << s << endl;
 
 	return 0;
 }
 
-void rstrip(char* str, const char* str_2) {
-	for (int i{ (int)strlen(str) }; i >= strlen(str) - strlen(str_2); i--) {
-		for (int j{ 0 }; j < strlen(str_2); j++) {
-			if (str[i] == str_2[j]) {
-				str[i] = ' ';
+void rstrip(string& s, const string chars) {
+	int size_s = (int)strLen(s);
+	int size_chars = (int)strLen(chars);
+
+	for (int i = 0; i < size_chars; i++) {
+		for (int j = strLen(s) - 1; j >= 0; j--) {
+			if (s[j] == chars[i]) {
+				s.erase(j, 1);
 			}
 		}
-
 	}
 }
 
-size_t strLen(const string str) { //Realise func strlen
+size_t strLen(const string str) {
 	size_t len = 0;
 
 	for (int i{ 0 }; str[i] != '\0'; i++) {
