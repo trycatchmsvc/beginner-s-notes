@@ -9,11 +9,11 @@ void print_nD_array(int** arr, const size_t nrows, const size_t ncols);
 
 int main() {
 	// consts
-	size_t nrows = 2;
-	size_t ncols = 2;
+	size_t nrows = 4;
+	size_t ncols = 4;
 	int val = 1;
 	int** arr = new int* [nrows];
-	
+
 	//create nDd array
 	for (int i{ 0 }; i < nrows; i++) {
 		arr[i] = new int[ncols];
@@ -53,12 +53,12 @@ void print_nD_array(int** arr, const size_t nrows, const size_t ncols) {
 
 int** make2d(const size_t nrows, const size_t ncols, int val) {
 	int** arr = new int* [nrows];
-	
+
 	for (int i{ 0 }; i < nrows; i++) {
 		arr[i] = new int[ncols];
 	}
 
-	for (int i{0}; i < nrows; i++)
+	for (int i{ 0 }; i < nrows; i++)
 		for (int j{ 0 }; j < ncols; j++) {
 			arr[i][j] = val++;
 		}
@@ -67,10 +67,9 @@ int** make2d(const size_t nrows, const size_t ncols, int val) {
 }
 
 void fliplr(int** arr, size_t nrows, size_t ncols) {
-	size_t index_val = ncols - 1;
 	for (int i{ 0 }; i < nrows; i++) {
-		for (int j(0); j < ncols; j++) {
-			swap(arr[i][j], arr[i][index_val]);
+		for (int j(0); j < ncols / 2; j++) {
+			swap(arr[i][j], arr[i][ncols - j - 1]);
 		}
 	}
 }
