@@ -442,3 +442,71 @@ String Methods
 **strcspn** - Подсчитывает длину участка до любого символа из заданного набора
 
 **strtok** - Разделяет строку на токены, используя разделители
+
+Fstream - Work with files (USING OOP)
+=====================
+
+Работа с записью в файлы:
+###
+```C++
+#include <iostream>
+#include <fstream> //Library that use stream work with files 
+using namespace std;
+
+int main() {
+	
+	string path = "test.txt"; //Путь к нашему файлу
+ 	ofstream fout; //Создаем обьект класса
+	fout.open(path); //Используем метод к обьекту, файлы создаются заново
+	//fout.open(path, ofstream::app); Если файл не найден он создается, иначе просто дописываются данные
+	
+	//Проверка 
+	if (!fout.is_open()) {
+		cout << "Error - File was not opened!";
+	}
+	else {
+		cout << "File was opened";
+	}
+
+	fout << "o"; // Запись в файл
+	
+
+	fout.close(); // Закрытие файла
+
+	return 0;
+}
+```
+
+Если мы хотим прочесть файл, то:
+###
+```C++
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+
+	string path = "test.txt"; //Путь к файлу и его название
+	
+	ifstream fin; //Создаем обьект класса ifstream
+
+	fin.open(path); //Открываем файл
+
+	if (!fin.is_open()) {
+		cout << "File was not opened" << endl;
+	}
+	else {
+		cout << "File was opened" << endl;
+	}
+
+	char symb;
+
+	while (fin.get(symb)) { // Метод fin вносит в char символ из текста, мы его выводим
+		cout << symb;
+	}
+
+	fin.close(); //Закрываем файл
+
+	return 0;
+}
+```
