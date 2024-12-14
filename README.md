@@ -398,7 +398,7 @@ int main(){
 }
 ```
 
-String of arrays and String datatype from library
+Строка в массиве \ Строка тип данных
 =====================
 ```c++
 #include <iostream>
@@ -443,7 +443,7 @@ String Methods
 
 **strtok** - Разделяет строку на токены, используя разделители
 
-Fstream - Work with files (USING OOP)
+Fstream - Работа с файлами
 =====================
 
 Работа с записью в файлы:
@@ -506,6 +506,49 @@ int main() {
 	}
 
 	fin.close(); //Закрываем файл
+
+	return 0;
+}
+```
+Пример использование потока ввода <ost>
+###
+```C++
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+
+	string out_path = "output.txt";
+	ofstream ost(out_path);
+
+	char a[] = "123\n456\0";
+
+	for (int i{ 0 }; i < strlen(a); i++) {
+		ost << a[i];
+	}
+
+	return 0;
+}
+```
+
+Пример использования потока вывода <ist>
+###
+```C++
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+
+	string inp_path = "input.txt";
+	ifstream ist(inp_path);
+
+	char* buffer = new char[255]; //Буфер для записи строк из файла(строка считается по пробелам)
+
+	while (ist >> buffer) {
+		cout << buffer;
+	}
 
 	return 0;
 }
