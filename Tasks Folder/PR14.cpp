@@ -61,7 +61,7 @@ void my_task(std::istream& ist, std::ostream& ost) {
 		int month = get_date(date)[1];
 		int year = get_date(date)[2];
 		
-		int plus_days = 40;
+		int plus_days = 3;
 
 		cout << "day: " << days << endl << "month: " << month << endl << "year: " << year << endl;
 
@@ -80,7 +80,7 @@ void my_task(std::istream& ist, std::ostream& ost) {
 						plus_days = 0;
 					}
 				}
-				else if (month == 2 and year % 4 == 0) {
+				else if (month == 2 and (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0))) {
 					if (day > 29) {
 						day = day - 29;
 						plus_days = plus_days - (29 - days);
