@@ -1,5 +1,5 @@
 //Дополнительное упражнение № 2 (по вариантам, 100% — отл.)
-//3 Variant
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <locale>
