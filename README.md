@@ -20,7 +20,7 @@
 
 ## Datatype C++
 
-**sizeof(type data)** - method for showing size of any type data
+**Функция получения размера типа данных:** `sizeof()`
 
 - `char`: only one symbole OR ASCII numbers | 1 byte -128 до 127 (для signed char) 0 до 255 (для unsigned char)
 
