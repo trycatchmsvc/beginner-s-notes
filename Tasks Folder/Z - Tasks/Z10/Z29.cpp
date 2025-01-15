@@ -1,57 +1,47 @@
 //29. Написать функцию void strip(char *s, const char *chars), 
 // которая удаляет из начала и конца строки s символы, входящие в строку chars.
-
 #include <iostream>
 using namespace std;
 
-void strip(string& s, const string chars);
-size_t strLen(string str);
+void displacement(char* array, const int& index);
+void strip(char* s, const char* chars);
 
 int main() {
 
-	string s = "All work and no play makes Jack a dull boy: g) a)";
+	char string_array[] = "All work and no play makes Jack a dull boy: g) a)";
+	char del_arr[] = "All :))";
 
-	string chars = "All :))";
-
-	strip(s, chars);
-
-	cout << s << endl;
+	strip(string_array, del_arr);
+	cout << string_array;
 
 	return 0;
 }
 
-void strip(string& s, const string chars) {
-	int size_s = (int)strLen(s);
-	int size_chars = (int)strLen(chars);
 
-	for (int i = 0; i < size_chars; i++) {
-		for (int j = 0; j < strLen(s); j--) {
-			if (s[j] == chars[i] and chars[i] != ' ') {
-				s.erase(j, 1);
-			}
-		}
+void displacement(char* array, const int& index) {
+	for (int i{ index }; array[i] != '\0'; i++) {
+		array[i] = array[i + 1];
 	}
-
-	for (int i = 0; i < size_chars; i++) {
-		for (int j = strLen(s) - 1; j >= 0; j--) {
-			if (s[j] == chars[i] and chars[i] != ' ') {
-				s.erase(j, 1);
-			}
-		}
-	}
-
-	while (s[0] == ' ') {
-		s.erase(0, 1);
-	}
-
 }
 
-size_t strLen(const string str) {
-	size_t len = 0;
-
-	for (int i{ 0 }; str[i] != '\0'; i++) {
-		len++;
+void strip(char* s, const char* chars) {
+	for (int del_point{ 0 }; chars[del_point] != ' '; del_point++) { // Удаление из начала строки
+		for (int i{ 0 }; i < strlen(chars); i++) {
+			if (s[i] == chars[del_point]) {
+				displacement(s, i);
+				break;
+			}
+		}
 	}
-
-	return len;
+	while (s[0] == ' ') {
+		displacement(s, 0);
+	}
+	for (int del_point{ (int)strlen(chars)}; chars[del_point] != ' '; del_point--) { //Удаление с конца строки
+		for (int i{ (int)strlen(s) }; i > 0; i--) {
+			if (s[i] == chars[del_point]) {
+				displacement(s, i);
+				break;
+			}
+		}
+	}
 }
