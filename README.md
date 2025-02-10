@@ -61,6 +61,9 @@
 [Fstream - Работа с файлами](https://github.com/beginningpythonist/Study-C-Plus-Plus?tab=readme-ov-file#fstream---%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D1%81-%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%D0%BC%D0%B8)
 ###
 
+[Fstream - Работа с бинарными файлами](https://github.com/beginningpythonist/Study-C-Plus-Plus/tree/main?tab=readme-ov-file#%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D1%81-%D0%B1%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D1%8B%D0%BC%D0%B8-%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%D0%BC%D0%B8)
+###
+
 ## Datatype C++
 
 **Функция получения размера типа данных:** `sizeof()`
@@ -614,7 +617,7 @@ int main() {
 }
 ```
 
-Работа с бинарными файлами
+Fstream - Работа с бинарными файлами
 =====================
 
 Работа с указателем в бинарном файле
