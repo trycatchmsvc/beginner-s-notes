@@ -496,6 +496,16 @@ String Methods
 Fstream - Работа с файлами
 =====================
 
+Параметры потока
+###
+
+- `ios_base::in`		- чтение
+- `ios_base::out`		- запись
+- `ios_base::binary`	- двоичный режим
+- `ios_base::ate`		- указатель устанавливается в конец файла
+- `ios_base::app`		- запись будет происходить в конец файла
+- `ios_base::trunc`		- все, что было в файле, стирается при открытии
+
 Работа с записью в файлы:
 ###
 ```C++
@@ -601,5 +611,64 @@ int main() {
 	}
 
 	return 0;
+}
+```
+
+Работа с бинарными файлами
+=====================
+
+Работа с указателем в бинарном файле
+###
+
+- `seekg/seekp`	- перемещение указателя
+- `tell`		- получение указателя
+
+Чтение бинарного файла
+###
+```C++
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main(){
+
+    ifstream fin;
+
+    fin.open("test.bin", ios_base::binary);
+
+    int tmp;
+
+    while(fin.read((char *)&tmp, sizeof(int))){
+        cout << tmp << endl;
+    }
+
+    return 0;
+}
+```
+Запись в бинарном файле
+###
+
+```C++
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main(){
+
+    ofstream fout;
+
+    fout.open("test.bin");
+
+    if (fout){
+        cout << "File was opened" << endl;
+    }
+
+    int arr[3]{1, 2, 3};    
+
+    fout.write((char* )&arr, sizeof(int) * 3);
+
+    fout.close();
+
+    return 0;
 }
 ```
