@@ -5,7 +5,7 @@ using namespace std;
 
 int** make2d(const size_t nrows, const size_t ncols, const int val);
 void transpose(int** arr, size_t size);
-void print_nD_array(int** arr, const size_t nrows, const size_t ncols);
+void print_2D_array(int** arr, const size_t nrows, const size_t ncols);
 
 int main() {
 	// consts
@@ -27,10 +27,10 @@ int main() {
 	}
 
 	cout << "Array before\n" << endl;
-	print_nD_array(arr, nrows, ncols);
+	print_2D_array(arr, nrows, ncols);
 	cout << "\nArray after" << endl;
 	transpose(arr, nrows);
-	print_nD_array(arr, nrows, ncols);
+	print_2D_array(arr, nrows, ncols);
 
 	return 0;
 
@@ -42,7 +42,7 @@ int main() {
 	arr = nullptr;
 }
 
-void print_nD_array(int** arr, const size_t nrows, const size_t ncols) {
+void print_2D_array(int** arr, const size_t nrows, const size_t ncols) {
 	for (int i{ 0 }; i < nrows; i++) {
 		for (int j{ 0 }; j < ncols; j++) {
 			cout << arr[i][j] << " ";
