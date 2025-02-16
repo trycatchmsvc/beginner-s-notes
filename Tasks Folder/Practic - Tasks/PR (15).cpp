@@ -5,6 +5,8 @@ using namespace std;
 
 void read_array(int** &array, int const &lines, int const &columns);
 void text2bin(ifstream &fin, ofstream &fout);
+void my_task(fstream &ist);
+void my_task_9(int &start_point, int &end_point, fstream &ist);
 
 int main(){
 
@@ -26,13 +28,26 @@ int main(){
     fout.close();
 
     if (!fin.is_open() && !fout.is_open()){
-        cout << "File was closed in all streams" << endl;
+        cout << "File was closed in all streams\n" << endl;
     }
     
-
     //задание 
 
+    fstream fin_2;
 
+    fin_2.open("output.bin", ios_base::binary | ios_base::out | ios_base::in);
+
+    if (fin_2.is_open()){
+        cout << "File was open in all streams - binary" << endl;
+    }
+
+    my_task(fin_2);
+    
+    fin_2.close();
+
+    if (!fin_2.is_open()){
+        cout << "File was closed in all streams - binary" << endl;
+    }
 
     return 0;
 }
@@ -102,3 +117,61 @@ void text2bin(ifstream &fin, ofstream &fout){
     array = nullptr;
 
 }
+
+void my_task(fstream &ist){
+
+    int temp;
+
+    ist.read((char *)&temp, sizeof(int));
+    int lines = temp;
+    ist.read((char *)&temp, sizeof(int));
+    int columns = temp;
+
+
+    int array[2];
+    int pointer_arr{0};
+    int amount_lines{0};
+    int counter{2};
+
+    for (int i{0}; i < lines; i++){
+        // ist.read((char *)&temp, sizeof(int));
+        for (int j{0}; j < columns; j++){
+            ist.read((char *)&temp, sizeof(int));
+            if (temp < 0 && amount_lines < 2){
+                array[pointer_arr++] = counter + 1;
+                amount_lines++;
+            }
+            counter++;
+        }
+        
+        if (amount_lines == 2){
+            my_task_9(array[0], array[1], ist);
+        }
+        
+        else{
+            cout << "there are not two numbers below zero in line" << endl;
+        }
+        amount_lines = 0;
+    }
+    
+}
+
+void my_task_9(int &start_point, int &end_point, fstream &ist){
+
+    int save_position = ist.tellp();
+    int temp;
+    int memory{1};
+    
+    ist.seekp(start_point * sizeof(int), ios_base::beg);
+    for (int i{0}; i < end_point - start_point - 1; i++){
+        ist.read((char*)&temp, sizeof(int));
+        memory = memory * temp;
+    }
+
+    cout << memory << endl;
+    
+    ist.seekp(save_position, ios_base::beg);
+}
+
+
+
