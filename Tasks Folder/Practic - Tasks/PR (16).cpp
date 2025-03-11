@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <cstring>
 #include <fstream>
 #include <iomanip>
 
@@ -25,13 +24,15 @@ struct Journal {
 };
 
 Journal* load_txt(istream& ist, std::size_t& len);
-char* return_char(char* array, int pointer);
+Journal* load_bin(istream& ist, std::size_t& len);
+
+
+
 void print_structure(Journal* array, size_t& len);
 void save_bin(const Journal * data, std::size_t len, fstream& ost);
-Journal* load_bin(istream& ist, std::size_t& len);
-Journal* sort_structure_array(Journal* array, std::size_t& len);
-
-void mode_1(fstream& fbin, fstream& fin, std::size_t len_array );
+void sort_structure_array(Journal*& array, std::size_t& len);
+char* return_char(char* array, int pointer);
+void mode_1(fstream& fbin, fstream& fin, std::size_t len_array);
 void mode_2(fstream& fbin, std::size_t len_array);
 void mode_9(fstream& ist, std::size_t len, fstream& ist_2); // Own variant of work
 
@@ -45,84 +46,39 @@ int main() {
     fbin.open("output.bin", ios_base::binary | ios_base::in | ios_base::out);
     fbin_2.open("output_2.bin", ios_base::binary | ios_base::in | ios_base::out);
 
-    if (!fin.is_open() || !fbin.is_open() || !fbin_2.is_open()) {
+    if (!fin.is_open() || !fbin.is_open() || !fbin_2.is_open()) { //Checking
         cout << "Error" << endl;
     }
 
     size_t len_array{ 2 };
     
-    mode_1(fbin, fin, len_array);
-    cout << endl;
-    mode_2(fbin, len_array);
+    int mode;
+    cout << "Choose mode: ";
+    cin >> mode; cout << endl;
 
-    mode_9(fbin, len_array, fbin_2);
+
+    switch (mode) { // Select Mode 
+        case 1:
+            mode_1(fbin, fin, len_array); //1 - Write txt
+            break;
+        case 2:
+            mode_1(fbin, fin, len_array); //2 - Write Bin
+            break;
+        case 3:
+            mode_9(fbin, len_array, fbin_2); //3 - Sort by name
+            break;
+    }  
     
 
-    fin.close();
+    fin.close(); //Close all streams
     fbin.close();
     fbin_2.close();
-    return 0;
-}
 
-void mode_9(fstream& ist, std::size_t len, fstream& ist_2) {
-    
-    Journal* array = new Journal[len];
-    array = load_bin(ist, len);
-
-
-
-}
-
-Journal* sort_structure_array(Journal* array, std::size_t& len) {
-
-    Journal* array = new Journal[len];
-
-
-
-    return array;
-    delete[]array;
-
-}
-
-Journal* load_bin(istream& ist, std::size_t& len) {
-    
-    Journal* array = new Journal[len];
-    Journal tmp;
-
-    ist.seekg(ios_base::beg);
-
-    for (int i{ 0 }; i < len; i++) {
-        ist.read((char*)&tmp, sizeof(Journal));
-        array[i] = tmp;
+    if (fin.is_open() || fbin.is_open() || fbin_2.is_open()) { //Checking
+        cout << "Error" << endl;
     }
 
-    return array;
-    delete[]array;
-}
-
-void mode_1(fstream& fbin, fstream& fin, std::size_t len_array) {
-
-    Journal* array = new Journal[len_array];
-    array = load_txt(fin, len_array);
-
-    print_structure(array, len_array);
-    
-    save_bin(array, len_array, fbin);
-
-    delete[]array;
-}
-
-void mode_2(fstream& ost, std::size_t len) {
-    Journal* array = new Journal[len];
-    
-    array = load_bin(ost, len);
-    print_structure(array, len);
-
-    delete[]array;
-}
-
-void save_bin(const Journal* data, std::size_t len, fstream& ost) {
-    ost.write((char*)data, sizeof(Journal) * len);
+    return 0;
 }
 
 Journal* load_txt(istream& ist, std::size_t& len) {
@@ -138,9 +94,9 @@ Journal* load_txt(istream& ist, std::size_t& len) {
 
         if (token[0] == '\"') {
             char* arr = return_char(token, 1);
-            
+
             strcpy(array[i].info.name, arr);
-            
+
             temp = strtok(token, " ");
             temp = strtok(NULL, " ");
         }
@@ -152,7 +108,7 @@ Journal* load_txt(istream& ist, std::size_t& len) {
 
         temp = strtok(NULL, " ");
         array[i].info.price = atof(temp);
-        
+
         temp = strtok(NULL, " ");
         array[i].info.exemplar = atoi(temp);
 
@@ -174,18 +130,91 @@ Journal* load_txt(istream& ist, std::size_t& len) {
             if (!strcmp(temp, "children")) {
                 array[i].themes = JournalTematics::children;
             }
-            
+
             else if (!strcmp(temp, "popular")) {
                 array[i].themes = JournalTematics::popular;
             }
-            
+
             else if (!strcmp(temp, "scientific")) {
                 array[i].themes = JournalTematics::scientific;
             }
         }
     }
     return array;
+}
+
+Journal* load_bin(istream& ist, std::size_t& len) {
+
+    Journal* array = new Journal[len];
+    Journal tmp;
+
+    ist.seekg(ios_base::beg);
+
+    for (int i{ 0 }; i < len; i++) {
+        ist.read((char*)&tmp, sizeof(Journal));
+        array[i] = tmp;
+    }
+
+    return array;
+}
+
+void mode_1(fstream& fbin, fstream& fin, std::size_t len_array) {
+
+    Journal* array = new Journal[len_array];
+    array = load_txt(fin, len_array);
+
+    print_structure(array, len_array);
+
+    save_bin(array, len_array, fbin);
+
+    cout << endl;
+
     delete[]array;
+}
+
+void mode_2(fstream& ost, std::size_t len) {
+    Journal* array = new Journal[len];
+
+    array = load_bin(ost, len);
+    print_structure(array, len);
+
+    cout << endl;
+
+    delete[]array;
+}
+
+void mode_9(fstream& ist, std::size_t len, fstream& ist_2) {
+    
+    Journal* array = new Journal[len];
+    array = load_bin(ist, len);
+
+    sort_structure_array(array, len);
+
+    print_structure(array, len);
+
+    cout << endl;
+
+    delete[]array;
+}
+
+void sort_structure_array(Journal*& array, std::size_t& len) {
+
+    char vocabulary[] = "abcdefghijklmnopqrstuvwxyz";
+
+    for (int i{ 0 }; i < len; i++) {
+        bool Flag = true;
+        for (int j{ 0 }; j < len - 1; j++) {
+            if (strchr(vocabulary, tolower(array[j].info.name[0])) > strchr(vocabulary, tolower(array[j + 1].info.name[0]))) {
+                swap(array[j], array[j + 1]);
+                Flag = false;
+            }
+        }
+        if (Flag == true) break;
+    }
+}
+
+void save_bin(const Journal* data, std::size_t len, fstream& ost) {
+    ost.write((char*)data, sizeof(Journal) * len);
 }
 
 char* return_char(char* array, int pointer) {
@@ -199,7 +228,6 @@ char* return_char(char* array, int pointer) {
     out_arr[pointer_array] = '\0';
 
     return out_arr;
-    delete[]out_arr;
 }
 
 void print_structure(Journal* array, size_t& len) {
