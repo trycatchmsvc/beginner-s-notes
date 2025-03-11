@@ -1,11 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <cstring>
 #include <fstream>
-#include <string>
+#include <iomanip>
 
 using namespace std;
-
-// БД Права Пользователя
 
 struct JournalInfo {
     char name[255];
@@ -25,105 +24,133 @@ struct Journal {
     JournalTematics themes;
 };
 
-Journal* load_txt(ifstream& ist, size_t& len);
+Journal* load_txt(istream& ist, std::size_t& len);
+char* return_char(char* array, int pointer);
+void print_structure(Journal* array, size_t& len);
+void save_bin(const Journal * data, std::size_t len, fstream& ost);
+
+void mode_1(fstream& fbin, fstream& fin, std::size_t len_array );
+void mode_2(fstream& fbin, std::size_t len_array);
 
 int main() {
-    
-    ifstream fin;
-    fin.open("input.txt");
 
-    if (!fin.is_open()) {
-        cout << "Ifstream was not opened" << endl; 
+    fstream fin;
+    fstream fbin;
+
+    fin.open("input.txt", ios_base::in);
+    fbin.open("output.bin", ios_base::binary | ios_base::in | ios_base::out);
+    
+    if (!fin.is_open() || !fbin.is_open()) {
+        cout << "Error" << endl;
     }
+
+    size_t len_array{ 2 };
     
+    mode_1(fbin, fin, len_array);
+       
 
-
-    size_t len = 2;
-    cout << load_txt(fin, len)[1].themes;
-
-
-    
-    
 
     
+    
+
     fin.close();
-    if (fin.is_open()) {
-        cout << "Ifstream was not closed" << endl;
-    }
-
-	return 0;
+    fbin.close();
+    return 0;
 }
 
-Journal* load_txt(ifstream& ist, size_t& len) {
+void mode_1(fstream& fbin, fstream& fin, std::size_t len_array) {
 
-    
+    Journal* array = new Journal[len_array];
+    array = load_txt(fin, len_array);
+
+    print_structure(array, len_array);
+
+    save_bin(array, len_array, fbin);
+}
+
+void mode_2(fstream& fbin, std::size_t len_array) {
+
+}
+
+void save_bin(const Journal* data, std::size_t len, fstream& ost) {
+    ost.write((char*)data, sizeof(Journal) * len);
+}
+
+Journal* load_txt(istream& ist, std::size_t& len) {
 
     Journal* array = new Journal[len];
 
-    char token[128]{};
-    int pointer_array{ 0 };
 
     for (int i{ 0 }; i < len; i++) {
+        char token[128];
         ist.getline(token, 127);
-        if (token == "") {
-            break;
+
+        char* temp;
+        int pointer{ 0 };
+
+        if (token[0] == '\"') {
+            char* arr = return_char(token, 1);
+            strcpy(array[i].info.name, arr);
+            temp = strtok(token, " ");
+            temp = strtok(NULL, " ");
         }
-        else {
-        
-            bool Flag{ false };
-            int pointer_symbol{0};
-            int pointer_char{ 0 };
-            char tematics[32]{};
 
-            for (int i{ 0 }; token[i] != '\0'; i++) {
-                if (token[i] == '\"') {
-                    pointer_symbol = i;
-                    Flag = true;
-                    break;
-                }
-            }
+        else if (token[0] != '\"') {
+            temp = strtok(token, " ");
+            strcpy(array[i].info.name, temp);
+        }
 
-            if (Flag == true) {
-                
-                for (int i{ pointer_symbol + 1 }; token[i] != '\"'; i++) {
-                    tematics[pointer_char++] = token[i];
-                }
-                tematics[pointer_char++] = '\0';
-                
-                if (!strcmp(tematics, "popular science")) {
-                    array[pointer_array].themes = JournalTematics::popular_science;
-                }
+        temp = strtok(NULL, " ");
+        array[i].info.price = atof(temp);
+        temp = strtok(NULL, " ");
+        array[i].info.exemplar = atoi(temp);
 
-                char* temp = strtok(token, " ");
-                strcpy(array[pointer_array].info.name, temp);
-                //cout << temp << endl;
-                temp = strtok(NULL, " ");
-                array[pointer_array].info.price = stof(temp);
-                temp = strtok(NULL, " ");
-                array[pointer_array].info.exemplar = stoi(temp);
+        temp = strtok(NULL, " ");
+
+        if (temp[0] == '\"') {
+            char* arr = return_char(temp, 1);
+            temp = strtok(NULL, " ");
+
+            strcat(arr, " ");
+            strcat(arr, return_char(temp, 0));
+
+            if (!strcmp(arr, "popular science")) {
+                array[i].themes = popular_science;
             }
-            if (Flag == false){
-                char* temp = strtok(token, " ");
-                strcpy(array[pointer_array].info.name, temp);
-                temp = strtok(NULL, " ");
-                array[pointer_array].info.price = stof(temp);
-                temp = strtok(NULL, " ");
-                array[pointer_array].info.exemplar = stoi(temp);
-                temp = strtok(NULL, " ");
-                
-                if (!strcmp(temp, "children")) {
-                    array[pointer_array].themes = JournalTematics::children;
-                }
-                else if (!strcmp(temp, "popular")) {
-                    array[pointer_array].themes = JournalTematics::popular;
-                }
-                else if (!strcmp(temp, "scientific")) {
-                    array[pointer_array].themes = JournalTematics::scientific;
-                }
+        }
+
+        else if (temp[0] != '\"') {
+            if (!strcmp(temp, "children")) {
+                array[i].themes = JournalTematics::children;
             }
-            pointer_array++;
+            else if (!strcmp(temp, "popular")) {
+                array[i].themes = JournalTematics::popular;
+            }
+            else if (!strcmp(temp, "scientific")) {
+                array[i].themes = JournalTematics::scientific;
+            }
         }
     }
     return array;
+}
+
+char* return_char(char* array, int pointer) {
+    char* out_arr = new char[128];
+    int pointer_array = 0;
+
+    for (int i = pointer; array[i] != '\"' and array[i] != '\0'; i++) {
+        out_arr[pointer_array++] = array[i];
+    }
+    out_arr[pointer_array] = '\0';
+
+    return out_arr;
+}
+
+void print_structure(Journal* array, size_t& len) {
+
+    cout << setw(20) << left << "Name" << setw(10) << left << "Price" << setw(10) << left << "Exemplars" << setw(10) << right << "Tematics" << endl;
+    for (int i{ 0 }; i < len; i++) {
+        cout << setw(20) << left << array[i].info.name << right << array[i].info.price << setw(10) << right << array[i].info.exemplar << setw(10) << right << array[i].themes << endl;
+    }
 }
 
