@@ -678,3 +678,112 @@ int main(){
     return 0;
 }
 ```
+
+Struct - структуры
+=====================
+Структура -- это производный тип данных, представляющий собой какую-либо конкретную определенную сущность, впрочем, как и класс.
+
+Пример
+
+```C++
+#include <iostream>
+
+using namespace std;
+
+struct JournalInfo {
+    char name[255];
+    float price;
+    int exemplar;
+};
+
+enum JournalTematics {
+    children,
+    popular,
+    scientific,
+    popular_science
+};
+
+struct Journal {
+    JournalInfo info;
+    JournalTematics themes;
+};
+
+int main() {
+
+    Journal child, hood{"child", 250, 3, children}; // Обычное заполенение
+    strcpy(child.info.name, "childrn");
+
+    size_t len{ 2 }l;
+    Journal* array = new Journal[len];
+
+    for (int i{ 0 }; i < len; i++) {
+        array[i].info.price = 100;
+    }
+
+    return 0;
+}
+```
+
+Enum - Перечисления
+=====================
+
+Это тип данных, который позволяет создавать набор именованных целых констант.
+
+```C++
+enum JournalTematics {
+    children,
+    popular,
+    scientific,
+    popular_science
+};
+```
+Template - шаблоны
+=====================
+
+Шаблоны в C++ — это механизм, который позволяет писать универсальный код, работающий с различными типами данных.
+
+```C++
+template <typename Type>
+Type print(const Type& data) {
+	std::cout << data << std::endl;
+	return 0;
+}
+```
+
+Union - обьединение
+=====================
+
+A union is a special class type that can hold only one of its non-static data members at a time.
+
+```C++
+#include <iostream>
+using namespace std;
+
+struct Check_1 {
+    int a;
+    double b;
+};
+
+
+union Check {
+    int a;
+    double b;
+};
+
+
+
+int main() {
+
+    Check number;
+    number.a = 10;
+
+    cout << number.a << endl;
+    number.b = 24;
+
+    cout << number.a << endl;
+    cout << number.b << endl;
+
+    return 0;
+}
+
+```
