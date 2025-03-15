@@ -363,7 +363,7 @@ int main() {
 Dynamic array
 =====================
 
-❗❗❗For the work with dynamic array you need have a data about numbers of slots❗❗❗
+❗❗❗For the work with dynamic array you need have a data about number of elements❗❗❗
 
 ```c++
 #include <iostream>
