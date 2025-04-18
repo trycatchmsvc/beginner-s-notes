@@ -12,14 +12,14 @@ struct node {
 };
 
 struct list {
-	node* head{nullptr};
-	node* last{nullptr};
+	node* head{ nullptr };
+	node* last{ nullptr };
 };
 
 void push_back(list& my_list, const char* symbol) {
 	node* new_node = new node;
 	strcpy(new_node->info, symbol);
-	
+
 	if (my_list.head == nullptr) {
 		my_list.head = new_node;
 		my_list.last = new_node;
@@ -35,9 +35,9 @@ void push_back(list& my_list, const char* symbol) {
 void push_front(list& my_list, const char* symbol) {
 	if (my_list.head == nullptr) {
 		push_back(my_list, symbol);
-	 }
+	}
 	else {
-		node *new_node = new node;
+		node* new_node = new node;
 		strcpy(new_node->info, symbol);
 
 		my_list.head->prev = new_node;
@@ -46,7 +46,7 @@ void push_front(list& my_list, const char* symbol) {
 	}
 }
 
-void insert_node(list &List, node *next, node *n) {
+void insert_node(list& List, node* next, node* n) {
 	if (next == 0) {
 		push_back(List, n->info);
 		return;
@@ -58,8 +58,10 @@ void insert_node(list &List, node *next, node *n) {
 
 	else {
 		next->prev->next = n;
+		n->prev = next->prev;
 		next->prev = n;
 		n->next = next;
+	
 	}
 }
 
@@ -85,19 +87,39 @@ void remove_node(list& lst, node* n) {
 	}
 }
 
-void print_list(list &top, fstream& ost) { //Переписать на ost поток
+void remove_node_by_index(list& lst, int index) {
+
+	node* current = lst.head;
+	int counter = 0;
+
+	while (current != nullptr) {
+		if (counter == index) {
+			remove_node(lst, current);
+			return;
+		}
+		current = current->next;
+		counter++;
+	}
+}
+
+void print_list(list& top, fstream& ost) {
 	for (node* current = top.head; current != nullptr; current = current->next) {
-		ost << current -> info << " ";
+		ost << current->info << " "; // Пробел между элементами
 	}
+	ost << endl;
 }
 
-void print_list_rev(list& lst, fstream ost) { //Переписать на ost поток
-	for (node* current = lst.last; current != nullptr; current = current->prev) {
-		ost << current->info << " ";
+void print_list_rev(list& lst, fstream& ost) {
+	node* current = lst.last;  // Начинаем с последнего элемента
+	while (current != nullptr) {
+		ost << current->info << " "; // Пробел между элементами
+		current = current->prev;  // Переходим к предыдущему элементу
 	}
+	ost << endl;  // Переход на новую строку после вывода
 }
 
-bool is_even_digit(node *nod) {
+
+bool is_even_digit(node* nod) {
 	bool Flag{ false };
 	int temp{ 0 };
 
@@ -163,8 +185,21 @@ int main() {
 		push_back(my_list, temp);
 	}
 
+	cout << "Input del index" << endl;
+	int index{ 0 };
+	cin >> index;
+	remove_node_by_index(my_list, index);
+
+
 	process_list(ost, lst);
+
+
+
 	print_list(my_list, ost);
+	print_list_rev(my_list, ost);
+
+
+
 
 
 	ist.close();
