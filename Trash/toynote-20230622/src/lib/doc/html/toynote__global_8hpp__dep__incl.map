@@ -1,0 +1,11 @@
+<map id="toynote_global.hpp" name="toynote_global.hpp">
+<area shape="rect" id="node1" title="Глобальный заголовочный файл библиотеки." alt="" coords="105,5,251,32"/>
+<area shape="rect" id="node2" href="$editnotedialog_8hpp.html" title="Заголовочный файл класса EditNoteDialog." alt="" coords="357,80,501,107"/>
+<area shape="rect" id="node5" href="$note_8hpp.html" title="Заголовочный файл класса Note." alt="" coords="177,80,256,107"/>
+<area shape="rect" id="node6" href="$notebook_8hpp.html" title="Заголовочный файл класса Notebook." alt="" coords="68,155,179,181"/>
+<area shape="rect" id="node7" href="$mainwindow_8hpp.html" title="Заголовочный файл класса MainWindow." alt="" coords="5,229,137,256"/>
+<area shape="rect" id="node3" href="$editnotedialog_8cpp.html" title="Файл реализации класса EditNoteDialog." alt="" coords="357,155,500,181"/>
+<area shape="rect" id="node4" href="$mainwindow_8cpp.html" title="Файл реализации класса MainWindow." alt="" coords="239,304,370,331"/>
+<area shape="rect" id="node8" href="$notebook_8cpp.html" title="Файл реализации класса Notebook." alt="" coords="161,229,272,256"/>
+<area shape="rect" id="node9" href="$note_8cpp.html" title="Файл реализации класса Note." alt="" coords="255,155,333,181"/>
+</map>
