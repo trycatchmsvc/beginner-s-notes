@@ -23,32 +23,6 @@ private:
 
 public:
 
-	/*journal(string name, float price, int exemplars, string tematic) {
-		cout << "Constructor" << endl;
-		this->name = name;
-		this->price = price;
-		this->exemplars = exemplars;
-		if (tematic == "children") {
-			this->tematic = JournalTematics::children;
-		}
-
-		else if (tematic == "popular") {
-			this->tematic = JournalTematics::popular;
-		}
-		else if (tematic == "scientific") {
-			this->tematic = JournalTematics::scientific;
-		}
-		else if (tematic == "popular_science") {
-			this->tematic = JournalTematics::popular_science;
-		}
-
-		else {
-			cout << "Error - Not Found tematic value\n Was set value - children" << endl;
-			this->tematic = JournalTematics::children;
-		}
-
-	}*/
-
 	//Default constructor
 	journal()
 	{
