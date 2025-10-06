@@ -787,3 +787,67 @@ int main() {
 }
 
 ```
+
+ООП + std::map
+=====================
+
+```C++
+#include <iostream>
+#include <string>
+#include <map>
+
+enum Color { //Декларация перечисления
+	red = 0,
+	green,
+};
+	
+std::map<std::string, Color> ColorMap = { //Использование map, ключ:значение
+	{"red", Color::red},
+	{"green", Color::green}
+};
+
+std::map<Color, std::string>ReverseColorMap = {
+	{Color::red, "red"},
+	{Color::green, "green"}
+};
+
+class Object { //Создание класса
+
+private: //Модификатор доступа только внутри класса
+	int numb; // Поля класса
+	Color object_color;
+	int* pos;
+
+
+protected: //Модификатор доступа внутри\унаследованного классов
+	int value;
+
+public:
+	Object(): pos(nullptr) { //Конструктор класса
+		this->numb = 1;
+		this->object_color = Color::green;
+		this->value = 10;
+		this->pos = new int[numb];
+	}
+
+	int get_numb() { //Геттер
+		return this->Object::numb; // this-> указывает на поле внутри обьекта
+	}
+
+	void set_color(const std::string &_color) { //Сеттер - позволяет правильно устанавливать значения
+		this->object_color = ColorMap.at(_color);
+	}
+
+	~Object() { //Деструктор
+		delete[]pos;
+		pos = nullptr;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Object& obj);//Дружественная функция
+
+};
+
+std::ostream& operator<<(std::ostream& os, const Object& obj) { //Переопределение оператора "<<" для cout
+	return os << "Object numb: " << obj.numb << " Color: " << ReverseColorMap[obj.object_color] << std::endl;
+}
+```
