@@ -1,19 +1,28 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <regex>
 #include <map>
+#include <vector>
+using std::cout;
 
-using namespace std;
 
-
-enum class Color :int {		
+enum Color :int {
 	red = 0,
 	green,
 	blue
 };
 static const std::map<std::string, Color> ColorMap = {
 	{"red",Color::red},
-	{"green",Color::red},
+	{"green",Color::green},
+	{"blue", Color::blue},
+};
+
+static const std::map <Color, std::string> ReverseColorMap = {
+	{Color::red, "red"},
+	{Color::green, "green"},
+	{Color::blue, "blue"},
 };
 
 class Point2D {
@@ -26,80 +35,84 @@ class Object {
 private:
 	Color color;
 	Point2D position;
-	bool xField{false};
 
 public:
-	void parse_string(char* _str) {
-		char *str = strtok(_str, " ");
+	std::string get_color() {
+		return ReverseColorMap.at(color);
+	}
+
+	void parse_string(const std::string& str) {
 		
-		while (str != NULL) {
-			for (int i{ 0 }; str[i] != '\0'; i++) {
-				str[i] = tolower(str[i]);
-				if (str[i] == ',') {
-					str[i] = '.';
-				}
-			}
+		std::regex rgx1(R"(\s*\"([a-zA-Z]+)\"\s*([\d.]+)\s*([\d.]+))");  
+		std::regex rgx2(R"(\s*([\d.]+)\s*([\d.]+)\s*\"([a-zA-Z]+)\")");
 
-			this->color = ColorMap.at(str);
+		std::smatch match;
 
-
-
-			if (strcmp(str, "red") == 0 or strcmp(str, "green") == 0 or strcmp(str, "blue") == 0) {
-				if (strcmp(str, "red") == 0) {
-					this->color = Color::red;
-				}
-				else if (strcmp(str, "green") == 0) {
-					this->color = Color::green;
-				}
-				else {
-					this->color = Color::blue;
-				}
-			}
-
-			else {
-				if (xField == false) {
-					this->position.pos_x = stof(str);
-					this->xField = true;
-				}
-				else {
-					this->position.pos_y = stof(str);
-				}
-			}
-			str = strtok(NULL, " ");
+		if (std::regex_search(str, match, rgx1)) {
+			std::string str_color = match[1].str();
+			std::transform(str_color.begin(), str_color.end(), str_color.begin(), ::tolower);
+			this->color = ColorMap.at(str_color);
+			this->position.pos_x = stod(match[2].str());
+			this->position.pos_y = stod(match[3].str());
 		}
-	}
-
-	
-	void print_object() {
-
-		if (this->color == Color::red) {
-			cout << "Color: red";
+		else if (std::regex_search(str, match, rgx2)) {
+			std::string str_color = match[3].str(); 
+			std::transform(str_color.begin(), str_color.end(), str_color.begin(), ::tolower);
+			this->color = ColorMap.at(str_color);
+			this->position.pos_x = stod(match[1].str());  
+			this->position.pos_y = stod(match[2].str());  
 		}
-
-		else if (this->color == Color::green) {
-			cout << "Color: green";
-		}
-
 		else {
-			cout << "Color: blue";
+			std::cout << "Can't parse: " << str << std::endl;
 		}
-
-		cout << "\nPosition x: " << this -> position.pos_x 
-			<< "\nPosition y: " << this -> position.pos_y << endl;
 	}
 
+	friend std::ostream& operator<<(std::ostream& os, const Object& obj);
 };
+
+std::ostream& operator<<(std::ostream& os, const Object& obj) {
+	os << "Color: " << ReverseColorMap.at(obj.color) <<
+		"\tpos_x: " << obj.position.pos_x << "\tpos_y: " << obj.position.pos_y << "\n";
+	return os;
+}
 
 
 int main() {
+	std::string color_filters;
+	std::cout << "Enter color filter (use space for list): ";
+	std::getline(std::cin, color_filters);
 
-	Object obj;
+	std::ifstream fin;
+	fin.open("test.txt");
 
-	char a[] = "\"green\" 12.3  3.0";
-	obj.parse_string(a);
+	std::vector<Object> objects;
 
-	std::cout << obj;
-	//obj.print_object();
+	for (std::string line; std::getline(fin, line); ) {
+		if (!line.empty()) {
+			Object obj;
+			obj.parse_string(line);
+			objects.push_back(obj);
+		}
+	}
+
+	for (int i = 0; i < objects.size(); i++) {
+		std::string current_color;
+		for (char c : color_filters) {
+			if (c == ' ') {
+				if (!current_color.empty() && objects[i].get_color() == current_color) {
+					std::cout << objects[i] << std::endl;
+					break;
+				}
+				current_color.clear();
+			}
+			else {
+				current_color += c;
+			}
+		}
+		if (!current_color.empty() && objects[i].get_color() == current_color) {
+			std::cout << objects[i] << std::endl;
+		}
+	}
 
 	return 0;
 }
