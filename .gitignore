@@ -1,2 +1,43 @@
+# IDE
 .vscode/
+.vs/
+.idea/
+*.pro.user
+*.pro.user.*
+CMakeLists.txt.user
 
+# Build output
+build/
+build-*/
+bin/
+obj/
+out/
+
+# Compiled files
+*.o
+*.obj
+*.exe
+*.out
+*.dll
+*.so
+*.a
+*.lib
+*.pdb
+*.ilk
+
+# Qt generated files
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+Makefile*
+!/Makefile
+.qmake.stash
+
+# Doxygen output
+doc/html/
+doc/latex/
+
+# OS
+.DS_Store
+Thumbs.db
